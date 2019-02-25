@@ -1,7 +1,7 @@
 MSATLIB
 =======
 
-Dockerfile for meteosatlib (msatlib) and its msat executable.
+Dockerfile for meteosatlib (msatlib) and its msat executable. See git@github.com:riaanvddool/docker-msatlib.git
 
 Register here to download the Public Wavelet Transform Decompression Library Software:
 http://oiswww.eumetsat.int/WEBOPS-cgi/wavelet/register
