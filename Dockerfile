@@ -53,16 +53,19 @@ RUN apt-get update && apt-get install -y \
     libgrib-api-dev \
   && rm -rf /var/lib/apt/lists/*
 
-
 RUN ./config/autogen.sh
 RUN ./configure
 
 RUN apt-get update && apt-get install -y \
   dos2unix \
+  help2man \
   && rm -rf /var/lib/apt/lists/*
 
 RUN make
-RUN make check
 RUN make install
 RUN ldconfig
 
+RUN echo 'GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins/2.3' >> /etc/environment
+RUN export GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins/2.3
+
+CMD msat
