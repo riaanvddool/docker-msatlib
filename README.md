@@ -6,7 +6,9 @@ Dockerfile for meteosatlib (msatlib) and its msat executable. See https://github
 Register here to download the Public Wavelet Transform Decompression Library Software:
 http://oiswww.eumetsat.int/WEBOPS-cgi/wavelet/register
 
-The file can now be downloaded from the link provided via email. Example:
+The file can now be downloaded from the link provided via email. Place the PublicDecompWT.zip file in the same directory as the Dockerfile.
+
+Example:
 
     wget http://oiswww.eumetsat.org/wavelet/html/1549891155/PublicDecompWT.zip
 
