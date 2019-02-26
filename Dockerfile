@@ -60,10 +60,10 @@ RUN ./configure
 
 RUN make
 RUN make install
+RUN ldconfig
 
 RUN echo 'GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins/2.3' >> /etc/environment
 RUN export GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins/2.3
-
-RUN ldconfig
+ENV GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins/2.3
 
 CMD msat
