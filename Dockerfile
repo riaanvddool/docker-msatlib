@@ -1,5 +1,4 @@
-# tested with ubuntu:18.04 
-FROM ubuntu  
+FROM ubuntu
 MAINTAINER rvddool
 
 RUN apt-get update && apt-get install -y \
@@ -13,36 +12,11 @@ RUN apt-get update && apt-get install -y \
     gcc \
     wget \
     make \
+    cmake \
     unzip \
     tar \
     pkg-config \
     libnetcdf-dev \
-  && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /opt
-
-RUN wget ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-cxx-4.2.tar.gz \
-  && tar xfz netcdf-cxx-4.2.tar.gz \
-  && rm netcdf-cxx-4.2.tar.gz
-
-WORKDIR /opt/netcdf-cxx-4.2
-
-RUN ./configure
-RUN make
-RUN make check
-RUN make install
-
-WORKDIR /opt
-
-RUN wget https://github.com/ARPA-SIMC/meteosatlib/archive/v1.8-1.zip \
-  && unzip v1.8-1.zip \
-  && rm v1.8-1.zip
-
-WORKDIR /opt/meteosatlib-1.8-1
-
-COPY PublicDecompWT.zip ./decompress/
-
-RUN apt-get update && apt-get install -y \
     autoconf \
     libtool \
     dos2unix \
@@ -53,28 +27,10 @@ RUN apt-get update && apt-get install -y \
     libgdal-dev \
     python-gdal \
     libgrib-api-dev \
+    libnetcdf-dev \
+    python-scipy \
+    python-pillow \
   && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get remove -y libgrib-api-dev
-
-WORKDIR /opt
-
-RUN wget https://confluence.ecmwf.int/download/attachments/3473437/grib_api-1.28.0-Source.tar.gz?api=v2 \
-  && tar xfz grib_api-1.28.0-Source.tar.gz\?api=v2 \
-  && rm grib_api-1.28.0-Source.tar.gz\?api=v2
-
-RUN mkdir build-gribapi
-
-WORKDIR /opt/build-gribapi
-
-
-RUN apt-get update && apt-get install -y \
-    cmake \
-  && rm -rf /var/lib/apt/lists/*
-
-RUN cmake ../grib_api-1.28.0-Source -DCMAKE_INSTALL_PREFIX=/usr/local -DENABLE_JPG=off -DENABLE_FORTRAN=off -DENABLE_EXAMPLES=off
-RUN make
-RUN make install
 
 WORKDIR /opt
 
@@ -89,6 +45,12 @@ RUN cmake ../jasper-2.0.14
 RUN make
 RUN make install
 
+RUN wget https://github.com/ARPA-SIMC/meteosatlib/archive/v1.8-1.zip \
+  && unzip v1.8-1.zip \
+  && rm v1.8-1.zip
+
+COPY PublicDecompWT.zip /opt/meteosatlib-1.8-1/decompress/
+
 WORKDIR /opt/meteosatlib-1.8-1
 RUN ./config/autogen.sh
 RUN ./configure
@@ -102,7 +64,4 @@ WORKDIR /output
 
 CMD msat
 
-RUN apt-get update && apt-get install -y \
-  python-scipy \
-  python-pillow
 
