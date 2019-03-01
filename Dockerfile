@@ -98,4 +98,11 @@ RUN ldconfig
 
 ENV GDAL_DRIVER_PATH=/usr/local/lib/gdalplugins/2.3
 
+WORKDIR /output
+
 CMD msat
+
+RUN apt-get update && apt-get install -y \
+  python-scipy \
+  python-pillow
+
