@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  msatlib:
+    container_name: meteosatlib-msat
+    build: .
+
+  msat:
+    container_name: meteosatlib-msat
+    build: .
+    working_dir: /output
+    command: msat
+

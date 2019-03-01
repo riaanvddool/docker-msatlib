@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:bionic
 MAINTAINER rvddool
 
 RUN apt-get update && apt-get install -y \
@@ -44,6 +44,19 @@ WORKDIR /opt/build-jasper
 RUN cmake ../jasper-2.0.14
 RUN make
 RUN make install
+
+WORKDIR /opt
+RUN wget ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-cxx-4.2.tar.gz \
+  && tar xfz netcdf-cxx-4.2.tar.gz \
+  && rm netcdf-cxx-4.2.tar.gz
+WORKDIR /opt/netcdf-cxx-4.2
+
+RUN ./configure
+RUN make
+RUN make check
+RUN make install
+
+WORKDIR /opt
 
 RUN wget https://github.com/ARPA-SIMC/meteosatlib/archive/v1.8-1.zip \
   && unzip v1.8-1.zip \
